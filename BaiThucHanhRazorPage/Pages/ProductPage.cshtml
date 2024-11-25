@@ -1,0 +1,65 @@
+﻿@page "/product/{id:int?}"
+@using BaiThucHanhRazorPage.Models;
+@model BaiThucHanhRazorPage.Pages.ProductPageModel
+@{
+    var product = Model.product;
+    var products = Model.FilteredProducts ?? Model.products;
+}
+<h1>@ViewData["Title"]</h1>
+
+ <!--Tìm kiếm-->
+ <form method="get">
+     <div class="input-group">
+         <input type="text" name="searchQuery" class="form-control" placeholder="Search..." value="@Model.SearchQuery"/>
+         <p></p>
+         <button class="btn btn-primary" type="submit">Search</button>
+     </div>
+ </form>
+
+
+@if (product != null)
+{
+    <h2>@product.Name</h2>
+    <p>Mô tả: @product.Description</p>
+    <p>Giá: @product.Price</p>
+
+    <!--Hình SP-->
+    <h3>Ảnh sản phẩm</h3>
+    @if(product.PathImages != null)
+    {
+        <div class="d-flex flex-wrap">
+            @foreach (var imagePath in product.PathImages)
+            {
+                <img src="@imagePath" alt="Ảnh sản phẩm" style="width:100px; height:100px; margin-right:10px;"/>
+            }
+        </div>
+    }
+    <a asp-page="ProductPage" asp-route-id="">Danh sách sản phẩm</a>
+}
+else
+{
+    <ul class="list-group">
+        @foreach (var item in products)
+        {
+            <li class="list-group-item">
+                <a asp-page="ProductPage" asp-route-id="@item.Id">@item.Name</a>
+                <a class="btn btn-warning" asp-page-handler="Remove" asp-route-id="@item.Id">Xóa</a>
+                <a class="btn btn-info" asp-page="UpdateProductPage" asp-route-id="@item.Id">Edit</a>
+            </li>
+        }
+    </ul>
+    <hr />
+    <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="RemoveAll">
+        Xóa tất cả
+    </a>
+    <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="LoadAll">
+        Nạp sản phẩm    
+    </a>
+    <a class="btn btn-primary" asp-page="CreateProductPage">
+        Tạo sản phẩm
+    </a>
+    <a class="btn btn-danger" asp-page-handler="ResetProducts">
+        Làm mới sản phẩm
+    </a>
+
+}
