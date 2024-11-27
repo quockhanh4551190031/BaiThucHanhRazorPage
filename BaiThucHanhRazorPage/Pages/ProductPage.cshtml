@@ -7,6 +7,7 @@
 }
 <h1>@ViewData["Title"]</h1>
 
+
  <!--Tìm kiếm-->
  <form method="get">
      <div class="input-group">
@@ -16,6 +17,7 @@
      </div>
  </form>
 
+ <hr />
 
 @if (product != null)
 {
@@ -48,7 +50,9 @@ else
             </li>
         }
     </ul>
+
     <hr />
+
     <a class="btn btn-primary" asp-page="ProductPage" asp-page-handler="RemoveAll">
         Xóa tất cả
     </a>
