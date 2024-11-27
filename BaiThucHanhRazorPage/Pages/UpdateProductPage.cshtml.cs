@@ -37,32 +37,43 @@ namespace BaiThucHanhRazorPage.Pages
             if (!ModelState.IsValid)
             {
                 return Page();
-
             }
 
-            //Cập nhật SP
+            // Tìm sản phẩm theo ID
             var existingProduct = productService.GetProductById(id);
-            if(existingProduct == null)
+            if (existingProduct == null)
             {
                 return RedirectToPage("ProductPage");
             }
 
-            //Cập nhật thông tin
+            // Cập nhật thông tin sản phẩm (tên, mô tả, giá)
             existingProduct.Name = Product.Name;
             existingProduct.Description = Product.Description;
             existingProduct.Price = Product.Price;
 
-            //Kiểm tra và sửa ảnh
-            var imagePaths = existingProduct.PathImages ?? new List<string>();
+            // Xử lý ảnh
             var imagePath = Path.Combine(_env.WebRootPath, "images");
-            if(!Directory.Exists(imagePath))
+            if (!Directory.Exists(imagePath))
             {
                 Directory.CreateDirectory(imagePath);
             }
 
+            // Xóa ảnh cũ
+            var oldImagePaths = existingProduct.PathImages ?? new List<string>();
+            foreach (var oldImagePath in oldImagePaths)
+            {
+                var fullOldImagePath = Path.Combine(_env.WebRootPath, oldImagePath.TrimStart('/'));
+                if (System.IO.File.Exists(fullOldImagePath))
+                {
+                    System.IO.File.Delete(fullOldImagePath); // Xóa ảnh cũ
+                }
+            }
+
+            // Thêm ảnh mới
+            var newImagePaths = new List<string>();
             foreach (var image in Images)
             {
-                if(image.Length > 0)
+                if (image.Length > 0)
                 {
                     var filePath = Path.Combine(imagePath, image.FileName);
                     using (var stream = new FileStream(filePath, FileMode.Create))
@@ -70,16 +81,18 @@ namespace BaiThucHanhRazorPage.Pages
                         await image.CopyToAsync(stream);
                     }
 
-                    imagePaths.Add("/images/" + image.FileName);
+                    newImagePaths.Add("/images/" + image.FileName); // Đường dẫn mới
                 }
             }
 
-            Product.PathImages = imagePaths;
+            // Gán lại đường dẫn ảnh mới vào sản phẩm
+            existingProduct.PathImages = newImagePaths;
 
-            //Lưu & Cập nhật SP
+            // Lưu cập nhật sản phẩm
             productService.UpdateProduct(existingProduct);
 
             return RedirectToPage("ProductPage");
         }
+
     }
 }
