@@ -53,7 +53,6 @@ namespace BaiThucHanhRazorPage.Pages
             existingProduct.Price = Product.Price;
 
             //Kiểm tra và sửa ảnh
-            var imagePaths = existingProduct.PathImages ?? new List<string>();
             var imagePath = Path.Combine(_env.WebRootPath, "images");
             if(!Directory.Exists(imagePath))
             {
