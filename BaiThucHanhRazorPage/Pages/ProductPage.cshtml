@@ -11,9 +11,9 @@
  <!--Tìm kiếm-->
  <form method="get">
      <div class="input-group">
-         <input type="text" name="searchQuery" class="form-control" placeholder="Search..." value="@Model.SearchQuery"/>
+         <input type="text" name="searchQuery" class="form-control" placeholder="Tìm..." value="@Model.SearchQuery"/>
          <p></p>
-         <button class="btn btn-primary" type="submit">Search</button>
+         <button class="btn btn-secondary" type="submit">Tìm</button>
      </div>
  </form>
 
@@ -36,7 +36,7 @@
             }
         </div>
     }
-    <a asp-page="ProductPage" asp-route-id="">Danh sách sản phẩm</a>
+    <a class="btn btn-primary" asp-page="ProductPage" asp-route-id="">Danh sách sản phẩm</a>
 }
 else
 {
