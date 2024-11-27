@@ -88,7 +88,7 @@ namespace BaiThucHanhRazorPage.Pages
             // Gán lại đường dẫn ảnh mới vào sản phẩm
             existingProduct.PathImages = newImagePaths;
 
-            // Lưu cập nhật sản phẩm
+            // Lưu cập nhật
             productService.UpdateProduct(existingProduct);
 
             return RedirectToPage("ProductPage");
