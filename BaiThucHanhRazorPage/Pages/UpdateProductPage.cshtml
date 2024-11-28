@@ -10,23 +10,23 @@
 
 <form method="post" enctype="multipart/form-data">
     <div class="form-group">
-        <label asp-for="Product.Name">Name</label>
+        <label asp-for="Product.Name">Tên</label>
         <input asp-for="Product.Name" class="form-control" required/>
         <span asp-validation-for="Product.Name" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="Product.Description">Description</label>
+        <label asp-for="Product.Description">Mô tả</label>
         <textarea asp-for="Product.Description" class="form-control" required></textarea>
         <span asp-validation-for="Product.Description" class="text-danger"></span>
 
     </div>
     <div class="form-group">
-        <label asp-for="Product.Price">Price</label>
+        <label asp-for="Product.Price">Giá</label>
         <input asp-for="Product.Price" class="form-control" type="number" required/>
         <span asp-validation-for="Product.Price" class="text-danger"></span>
     </div>
     <div class="form-group">
-        <label asp-for="@Model.Images">Images (multiple)</label>
+        <label asp-for="@Model.Images">Hình ảnh (có thể chọn nhiều)</label>
         <input asp-for="@Model.Images" class="form-control" type="file" multiple/>
     </div>
     <br />
@@ -35,4 +35,4 @@
 
 <br />
 
-<a asp-page="ProductPage" class="btn btn-primary" >Danh sách sản phẩm</a>
+<a asp-page="ProductPage" class="btn btn-outline-primary" >Danh sách sản phẩm</a>
